@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="smestaj" xmlns:sm="smestaj">
+    <xs:complexType name="post">
+        <xs:sequence>
+        	<xs:element name="id" type="xs:string" />
+        	<xs:element name="likes" type="xs:int" />
+        	<xs:element name="dislikes" type="xs:int" />
+        	<xs:element name="lokacija" type="xs:string" maxOccurs="1" minOccurs="0"/>
+        	<xs:element name="opis" type="xs:string" />
+        	<xs:element maxOccurs="unbounded" name="slike"
+        		type="xs:string" />
+
+        	<xs:element name="korisnik" type="xs:string"></xs:element>
+        	<xs:element maxOccurs="unbounded" minOccurs="0"
+        		name="komentari" type="sm:komentar" />
+
+
+
+
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="komentar">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="ime" type="xs:string"/>
+            <xs:element name="sadrzaj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="poruka">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="sadrzaj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="posaljilac">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="primalac">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="addPostRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="post" type="sm:post"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addPostResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
