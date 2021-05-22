@@ -9,31 +9,24 @@ import xmlProjectSpringbootstarter.korisnik.KorisnikService;
 import java.util.ArrayList;
 
 @Service
-public class PorukaServiceImpl implements PorukaService{
+public class ZahtevServiceImpl implements ZahtevService{
 
     @Autowired
-    private PorukaRepository porukaRepository;
+    private ZahtevRepository porukaRepository;
 
     @Autowired
     private KorisnikService korisnikService;
 
     @Override
-    public Poruka newPoruka(Poruka poruka) {
+    public Zahtev newPoruka(Zahtev poruka) {
 
 
         Korisnik posaljilac = korisnikService.findOne(poruka.getPosaljilac());
         Korisnik primalac = korisnikService.findOne(poruka.getPrimalac());
         poruka.setPosaljilac(posaljilac.getIme());
         poruka.setPrimalac(primalac.getIme());
-        Poruka por = porukaRepository.insert(poruka);
-        if(posaljilac.getPoslate_poruke()==null) {
-            posaljilac.setPoslate_poruke(new ArrayList<Poruka>());
-        }
-        if(primalac.getPrimljene_poruke()==null) {
-            primalac.setPrimljene_poruke(new ArrayList<Poruka>());
-        }
-        posaljilac.getPoslate_poruke().add(por);
-        primalac.getPrimljene_poruke().add(por);
+        Zahtev por = porukaRepository.insert(poruka);
+
         korisnikService.update(posaljilac);
         korisnikService.update(primalac);
         return por;

@@ -3,7 +3,7 @@ package xmlProjectSpringbootstarter.poruka;
 import javax.jws.WebService;
 
 @WebService
-public interface PorukeSOAPService {
+public interface ZahtevSOAPService {
 
-    Poruka create(Poruka poruka);
+	Zahtev create(Zahtev poruka);
 }

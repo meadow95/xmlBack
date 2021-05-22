@@ -3,36 +3,22 @@ package xmlProjectSpringbootstarter.poruka;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Poruke")
-public class Poruka {
+@Document(collection = "Zahtev")
+public class Zahtev {
     @Id
     private String id;
-    private String sadrzaj;
     private String posaljilac;
     private String primalac;
 
-    public Poruka(String sadrzaj, String posaljilac, String primalac) {
-        this.sadrzaj = sadrzaj;
+    public Zahtev(String posaljilac, String primalac) {
         this.posaljilac = posaljilac;
         this.primalac = primalac;
     }
 
-    public Poruka() {
+    public Zahtev() {
 
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getSadrzaj() {
-
-        return sadrzaj;
-    }
-
-    public void setSadrzaj(String sadrzaj) {
-        this.sadrzaj = sadrzaj;
-    }
 
     public String getPosaljilac() {
         return posaljilac;

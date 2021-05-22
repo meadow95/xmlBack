@@ -6,7 +6,7 @@ import post.Post;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import xmlProjectSpringbootstarter.poruka.Poruka;
+import xmlProjectSpringbootstarter.poruka.Zahtev;
 
 import java.util.List;
 
@@ -23,11 +23,12 @@ public class Korisnik {
     private String brtel;
     private String adresa;
 	private String pmb;
-    private List<Poruka> primljene_poruke;
-    private List<Poruka> poslate_poruke;
     private List<Korisnik> pratioci;
     private List<Korisnik> pratim;
 	private List<Post> postovi;
+	private List<Zahtev> zahtevi;
+	private String privatniProfil;
+	
 
 	@JsonIgnore
     private boolean enabled;
@@ -38,7 +39,7 @@ public class Korisnik {
 
     }
 
-    public Korisnik(String username, String ime, String prezime, String email, String password, String brtel, String adresa, String pmb, List<Poruka> primljene_poruke, List<Poruka> poslate_poruke, boolean enabled, List<String> uloge) {
+    public Korisnik(String username, String ime, String prezime, String email, String password, String brtel, boolean enabled, List<String> uloge) {
         this.username = username;
     	this.ime = ime;
         this.prezime = prezime;
@@ -47,13 +48,20 @@ public class Korisnik {
         this.brtel = brtel;
         this.adresa = adresa;
         this.pmb = pmb;
-        this.primljene_poruke = primljene_poruke;
-        this.poslate_poruke = poslate_poruke;
         this.enabled = enabled;
         this.uloge = uloge;
+        this.privatniProfil = "no";
     }
     
-    public String getUsername() {
+    public String getPrivatniProfil() {
+		return privatniProfil;
+	}
+
+	public void setPrivatniProfil(String privatniProfil) {
+		this.privatniProfil = privatniProfil;
+	}
+
+	public String getUsername() {
 		return username;
 	}
 
@@ -69,23 +77,15 @@ public class Korisnik {
 		this.postovi = postovi;
 	}
 
-    public List<Poruka> getPrimljene_poruke() {
-        return primljene_poruke;
-    }
+    public List<Zahtev> getZahtevi() {
+		return zahtevi;
+	}
 
-    public void setPrimljene_poruke(List<Poruka> primljene_poruke) {
-        this.primljene_poruke = primljene_poruke;
-    }
+	public void setZahtevi(List<Zahtev> zahtevi) {
+		this.zahtevi = zahtevi;
+	}
 
-    public List<Poruka> getPoslate_poruke() {
-        return poslate_poruke;
-    }
-
-    public void setPoslate_poruke(List<Poruka> poslate_poruke) {
-        this.poslate_poruke = poslate_poruke;
-    }
-
-    public String getAdresa() {
+	public String getAdresa() {
         return adresa;
     }
 

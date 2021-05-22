@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/token/*", "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/dodatneusluge","/kategorija","/tipsmestaja","/smestaj/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/dodatneusluge","/kategorija","/tipsmestaja","/smestaj/*","/korisnikUsername/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/dodatneusluge/*","/kategorija/*","/tipsmestaja/*","/korisnici/*","/korisnici-list/*","/komentari/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.POST, "/komentari/*").hasAnyAuthority()
                 .antMatchers(HttpMethod.POST, "/dodatneusluge/*","/kategorija/*","/tipsmestaja/*","/korisnici/*","/korisnici-list/*").hasAuthority("ROLE_ADMIN")
@@ -70,7 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/smestaj/search","/signup","/user/*/","/smestaj","/korisnik/*/", "/poruka","/soap-api/*","/soapWs/*");
+    	
+        web.ignoring().antMatchers(HttpMethod.GET)
+        			.antMatchers("/smestaj/search","/signup","/user/*/","/smestaj","/korisnik/*/", "/poruka","/soap-api/*","/soapWs/*", "/korisnikUsername/*" );
     }
 
     @Bean

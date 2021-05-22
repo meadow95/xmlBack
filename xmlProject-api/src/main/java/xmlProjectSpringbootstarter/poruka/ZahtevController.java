@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-public class PorukaController {
+public class ZahtevController {
 
     @Autowired
-    private PorukaService porukaService;
+    private ZahtevService ZahtevService;
 
     @RequestMapping(
             method = RequestMethod.POST,
-            value="/poruka",
+            value="/zahtev",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Poruka> newPoruka(@RequestBody Poruka poruka) {
-        Poruka poruka1 = porukaService.newPoruka(poruka);
-        return new ResponseEntity<Poruka>(poruka1, HttpStatus.OK);
+    public ResponseEntity<Zahtev> newPoruka(@RequestBody Zahtev poruka) {
+    	Zahtev poruka1 = ZahtevService.newPoruka(poruka);
+        return new ResponseEntity<Zahtev>(poruka1, HttpStatus.OK);
     }
 }
