@@ -31,22 +31,7 @@
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="zahtev">
-        <xs:sequence>
-            <xs:element name="id" type="xs:string"/>
-            <xs:element name="posaljilac">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string"/>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="primalac">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string"/>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
+    </xs:complexType>
     <xs:element name="addPostRequest">
         <xs:complexType>
             <xs:sequence>

@@ -60,13 +60,6 @@ public class ObjectFactory {
         return new Post();
     }
 
-    /**
-     * Create an instance of {@link Zahtev }
-     * 
-     */
-    public Zahtev createZahtev() {
-        return new Zahtev();
-    }
 
     /**
      * Create an instance of {@link Komentar }

@@ -6,7 +6,6 @@ import post.Post;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import xmlProjectSpringbootstarter.poruka.Zahtev;
 
 import java.util.List;
 
@@ -26,7 +25,6 @@ public class Korisnik {
     private List<Korisnik> pratioci;
     private List<Korisnik> pratim;
 	private List<Post> postovi;
-	private List<Zahtev> zahtevi;
 	private String privatniProfil;
 	
 
@@ -75,14 +73,6 @@ public class Korisnik {
 
 	public void setPostovi(List<Post> postovi) {
 		this.postovi = postovi;
-	}
-
-    public List<Zahtev> getZahtevi() {
-		return zahtevi;
-	}
-
-	public void setZahtevi(List<Zahtev> zahtevi) {
-		this.zahtevi = zahtevi;
 	}
 
 	public String getAdresa() {
