@@ -1,0 +1,117 @@
+version: '3'
+services:
+
+    mongoDB:
+        image: mongo
+        container_name: mongoDB
+        ports:
+            - 27017:27017
+        networks: 
+            - xml
+
+
+    discovery-server:
+        image: discovery-server
+        restart: on-failure
+        container_name: discovery-server
+        build:
+            context: ./discovery-server
+            dockerfile: Dockerfile
+        ports:
+            - 8761:8761
+        networks: 
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+
+
+    api-gateway:
+        image: api-gateway
+        restart: on-failure
+        container_name: api-gateway
+        build:
+            context: ./api-gateway
+            dockerfile: Dockerfile
+        ports:
+            - 8080:8080
+        networks: 
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+        depends_on: 
+            - discovery-server
+
+    auth-service:
+        image: auth-service
+        restart: on-failure
+        container_name: auth-service
+        build:
+            context: ./auth-service
+            dockerfile: Dockerfile
+        ports:
+            - 8081:8081
+        networks:
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+        depends_on: 
+            - discovery-server
+            - mongoDB
+
+
+    user-service:
+        image: user-service
+        restart: on-failure
+        container_name: user-service
+        build:
+            context: ./user-service
+            dockerfile: Dockerfile
+        ports:
+            - 8083:8083
+        networks: 
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+        depends_on: 
+            - discovery-server
+            - mongoDB
+
+
+    post-service:
+        image: post-service
+        restart: on-failure
+        container_name: post-service
+        build:
+            context: ./post-service
+            dockerfile: Dockerfile
+        ports: 
+            - 8084:8084
+        networks: 
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+        depends_on: 
+            - discovery-server
+            - mongoDB
+
+
+    media-service:
+        image: media-service
+        restart: on-failure
+        container_name: media-service
+        build:
+            context: ./media-service
+            dockerfile: Dockerfile
+        ports: 
+            - 8085:8085
+        networks: 
+            - xml
+        environment: 
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+        depends_on: 
+            - discovery-server
+            - mongoDB
+
+   networks: 
+    	xml:
+            driver: bridge
