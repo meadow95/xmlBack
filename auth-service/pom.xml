@@ -14,7 +14,7 @@
     <name>Auth Service</name>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>8</java.version>
         <jaxb.version>2.3.1</jaxb.version>
         <jjwt.version>0.7.0</jjwt.version>
         <spring-boot.version>2.2.3.RELEASE</spring-boot.version>
