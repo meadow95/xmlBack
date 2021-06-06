@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import userservice.model.PostDTO;
 import userservice.model.User;
 import userservice.model.UserService;
 
@@ -67,7 +68,63 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
         }
     }
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/addPost/{user}/{post}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<PostDTO> addPostUser(@PathVariable("user") String user, @PathVariable("post") String post) {
+    	List<User> users = new ArrayList<User>();
+        users = this.userService.findAll();
+        PostDTO p = new PostDTO();
+        
+        System.out.println("USAO SAM U METODU!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       
+        
+        for(User k : users) {
 
+        	if(k.getUsername().equals(user)) {
+        		
+        		List<String> posts =  k.getPosts();
+        		posts.add(post);
+        		k.setPosts(posts);
+        		
+        		return new ResponseEntity<PostDTO>(p, HttpStatus.OK);
+        		
+        	}
+        }
+        
+        return new ResponseEntity<PostDTO>(p, HttpStatus.NOT_FOUND);
+    }
+    /*
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/addPost/{user}"
+ //           consumes = MediaType.APPLICATION_JSON_VALUE,
+ //           produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> addPostUser(@PathVariable("user") String user ,@RequestBody PostDTO post) {
+
+    	List<User> users = new ArrayList<User>();
+        users = this.userService.findAll();
+       
+        
+        for(User k : users) {
+
+        	if(k.getUsername().equals(user)) {
+        		
+        		List<String> posts =  k.getPosts();
+        		posts.add(post.getId());
+        		k.setPosts(posts);
+        		
+        		return new ResponseEntity<User>(k, HttpStatus.OK);
+        		
+        	}
+        }
+        
+        return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    }
+*/
 // za dodavanje admina?
     @RequestMapping(
             method = RequestMethod.POST,

@@ -2,11 +2,13 @@ package userservice.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+/*
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+*/
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserDetailsService,UserService {
+public class UserServiceImpl implements /*UserDetailsService,*/UserService {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserDetailsService,UserService {
         return userRepository.findByEmail(email);
     }
 
-
+/*
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User korisnik = findByEmail(s);
         if(korisnik == null) {
@@ -68,7 +70,7 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
         return userDetails;
     }
-
+*/
 
     public User create(User user) throws Exception {
         User savedKorisnik = this.userRepository.insert(user);

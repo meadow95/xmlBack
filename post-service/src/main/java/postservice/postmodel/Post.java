@@ -1,5 +1,6 @@
 package postservice.postmodel;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.stream.events.Comment;
+
 
 @Document(collection = "Post")
 public class Post {
@@ -17,25 +19,54 @@ public class Post {
     private int dislikes;
     private String location;
     private String description;
-    private List<String> pictures;
-    private String user;
+    private Binary picture;
+    private String pic;
+	private String user;
+	private String identificationNum;
     private List<Comment> comments;
+    private List<String> tags;
 
-	public Post(int likes, int dislikes, String location, String description, List<String> pictures, String user) {
+
+	public Post(int likes, int dislikes, String location, String description, String user) {
 
     	this.likes = likes;
     	this.dislikes = dislikes;
     	this.location = location;
     	this.description = description;
-    	this.pictures = pictures;
     	this.user = user;
     }
     
-    public Post() {
+
+	public Post() {
     	
+    	super();
     	
     }
+	
+    public String getIdentificationNum() {
+		return identificationNum;
+	}
 
+	public void setIdentificationNum(String identificationNum) {
+		this.identificationNum = identificationNum;
+	}
+    
+    public String getPic() {
+		return pic;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -76,12 +107,12 @@ public class Post {
 		this.description = description;
 	}
 
-	public List<String> getPictures() {
-		return pictures;
+	public Binary getPicture() {
+		return picture;
 	}
 
-	public void setPictures(List<String> pictures) {
-		this.pictures = pictures;
+	public void setPicture(Binary picture) {
+		this.picture = picture;
 	}
 
 	public String getUser() {

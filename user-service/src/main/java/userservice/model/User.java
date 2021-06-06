@@ -19,7 +19,7 @@ public class User {
     private String password;
     private List<User> followers;
 	private List<User> following;
-//	private List<Post> postovi;
+	private List<String> posts;
 	private String privateProfile;
 	
 
@@ -36,6 +36,14 @@ public class User {
         this.privateProfile = "no";
     }
     
+	public List<String> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<String> posts) {
+		this.posts = posts;
+	}
+	
     public String getId() {
 		return id;
 	}
@@ -99,15 +107,7 @@ public class User {
 	public void setFollowing(List<User> following) {
 		this.following = following;
 	}
-/*
-	public List<Post> getPostovi() {
-		return postovi;
-	}
 
-	public void setPostovi(List<Post> postovi) {
-		this.postovi = postovi;
-	}
-*/
 	public String getPrivateProfile() {
 		return privateProfile;
 	}

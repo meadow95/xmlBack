@@ -1,12 +1,14 @@
 package postservice.postmodel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostService {
     List<Post> findAll();
-    Post findOne(String id);
-    Post create(Post smestaj);
-    Post update(Post smestaj);
+    Optional<Post> findOne(String id);
+    Post findPost(String identificationNumber);
+    Post create(Post post);
+    Post update(Post post);
     void delete(String id);
 
 }

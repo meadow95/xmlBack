@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -34,11 +35,6 @@ public class PostServiceImpl implements PostService{
 
 //Ovo nek bude metoda za dodavanje komentara
     public Post update(Post post){
-        /*Smestaj smestajUpdt = this.smestajRepository.findOne(smestaj.getId());
-
-        smestajUpdt.setKapacitet(smestaj.getKapacitet());
-        smestajUpdt.setOpis(smestaj.getOpis());
-        smestajUpdt.setSlika((smestaj.getSlika()));*/
 
     	Post updatePost = this.postRepository.save(post);
         return updatePost;
@@ -49,8 +45,27 @@ public class PostServiceImpl implements PostService{
         this.postRepository.deleteById(id);
     }
 
-	public Post findOne(String id) {
+	public Optional<Post> findOne(String id) {
 		// TODO Auto-generated method stub
+		
+		Optional<Post> post = this.postRepository.findById(id);
+		return post;
+	}
+
+	public Post findPost(String identificationNumber) {
+		
+		List<Post> posts = this.postRepository.findAll();
+		
+		
+		for(Post p : posts) {
+			
+			if(p.getIdentificationNum().equalsIgnoreCase(identificationNumber)) {
+				
+				return p;
+			}			
+			
+		}
+		
 		return null;
 	}
 
