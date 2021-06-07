@@ -33,8 +33,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
                 .addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                    .antMatchers("/auth/**").permitAll()
-                    .anyRequest().hasRole(UserRole.USER.name());
+                    .antMatchers("/auth/**", "/media/mediaService/*").permitAll()
+                    .anyRequest().authenticated();
     }
 }
 

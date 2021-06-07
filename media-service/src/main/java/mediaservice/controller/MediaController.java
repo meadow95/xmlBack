@@ -2,6 +2,7 @@ package mediaservice.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("")
 public class MediaController {
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/media", method = RequestMethod.GET)
     public ResponseEntity<String> getSomeSensitiveData(HttpServletRequest request) {
         String linkWithSensitiveData = "https://youtu.be/s35rVw1zskA";
         String responseBody;
@@ -45,4 +46,16 @@ public class MediaController {
     private String wrapLinkInHtmlTag(String link) {
         return String.format("<a href='%s'>%s</a>", link, link);
     }
+    
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/mediaService/{param}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> getUserUsername(@PathVariable("param") String param) {
+    			String s = new String("Query param: ");
+    			s = s + param;
+        		return new ResponseEntity<String>(s, HttpStatus.OK);        
+    }
+    
 }
