@@ -68,5 +68,37 @@ public class PostServiceImpl implements PostService{
 		
 		return null;
 	}
+	
+	public int liked(String identificationNumber) {
+
+		int likes = 0;
+		List<Post> posts = this.postRepository.findAll();
+		for (Post p : posts) {
+			if (p.getId().equalsIgnoreCase(identificationNumber))
+				likes = p.getLikes()+1;
+
+			else {
+				likes = p.getLikes();
+			}
+		}
+		return likes;
+
+	}
+
+	public int disliked(String identificationNumber) {
+		
+		int likes =0;
+		List<Post> posts = this.postRepository.findAll();
+		for(Post p : posts) {
+			if(p.getId().equalsIgnoreCase(identificationNumber))
+				likes = p.getLikes()-1;
+			else {
+				likes = p.getLikes();
+			}
+		}
+		return likes;
+
+	}
+
 
 }

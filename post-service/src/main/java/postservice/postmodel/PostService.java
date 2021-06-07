@@ -10,5 +10,8 @@ public interface PostService {
     Post create(Post post);
     Post update(Post post);
     void delete(String id);
+    int liked(String identificationNumber);
+    int disliked(String identificationNumber);
+
 
 }
