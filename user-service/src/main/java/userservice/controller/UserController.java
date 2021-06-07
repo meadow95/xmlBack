@@ -1,6 +1,7 @@
 package userservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import userservice.model.PostDTO;
 import userservice.model.User;
+import userservice.model.UserDTO;
 import userservice.model.UserService;
 
 import java.util.ArrayList;
@@ -25,12 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin("*")
 public class UserController {
 	
+	private static final String REGISTER_USER = "http://localhost:8080/register";
+	
     @Autowired
     private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -62,7 +68,17 @@ public class UserController {
     )
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByEmail(user.getEmail()) == null) {
-            User k = userService.insert(user);
+            
+        	System.out.println("Pass: " + user.getPassword());
+        	
+        	RestTemplate restTemplate = new RestTemplate();
+            
+            UserDTO userDTO = new UserDTO(user.getUsername(), user.getPassword(), "ROLE_USER");            
+            Object newUserObject = restTemplate.postForObject(REGISTER_USER, userDTO, Object.class);
+        	
+        	User k = userService.insert(user);
+        	System.out.println("Pass: " + user.getPassword());
+  
             return new ResponseEntity<User>(k, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);

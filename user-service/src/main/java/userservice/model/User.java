@@ -36,6 +36,12 @@ public class User {
         this.privateProfile = "no";
     }
     
+    public User(UserDTO user) {
+    	this.username = user.getUsername();
+        this.password = user.getPassword();
+		
+	}
+    
 	public List<String> getPosts() {
 		return posts;
 	}
