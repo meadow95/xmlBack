@@ -2,6 +2,7 @@ package mediaservice.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,11 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("")
+@CrossOrigin("*")
 public class MediaController {
 
     @RequestMapping(value = "/media", method = RequestMethod.GET)
     public ResponseEntity<String> getSomeSensitiveData(HttpServletRequest request) {
-        String linkWithSensitiveData = "https://youtu.be/s35rVw1zskA";
+    	
+    	String s = "Header: " + request.getHeader("Authenticated");
+    	
+        String linkWithSensitiveData = "https://youtu.be/s35rVw1zskA, " + s;
         String responseBody;
 
         // display link nicely in browser
@@ -49,12 +54,22 @@ public class MediaController {
     
     @RequestMapping(
             method = RequestMethod.GET,
+            value = "/getHeader",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> getHeader(HttpServletRequest request) {
+    			String s = "Header: " + request.getHeader("Authenticated");
+        		return new ResponseEntity<String>(s, HttpStatus.OK);        
+    }
+    
+    @RequestMapping(
+            method = RequestMethod.GET,
             value = "/mediaService/{param}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> getUserUsername(@PathVariable("param") String param) {
+    public ResponseEntity<String> getUserUsername(@PathVariable("param") String param, HttpServletRequest request) {
     			String s = new String("Query param: ");
-    			s = s + param;
+    			s = s + param + "Header: " + request.getHeader("Authenticated");
         		return new ResponseEntity<String>(s, HttpStatus.OK);        
     }
     

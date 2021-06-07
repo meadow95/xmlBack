@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,21 @@ public class MutableHTTPServletRequest extends HttpServletRequestWrapper {
         // else return from into the original wrapped object
         return ((HttpServletRequest) getRequest()).getHeader(name);
     }
- 
+    
+    @Override
+    public Enumeration<String> getHeaders(String name) {
+        Set<String> set = new HashSet<>();
+        Optional.ofNullable(customHeaders.get(name)).ifPresent(h -> set.add(h));
+        Enumeration<String> e = ((HttpServletRequest) getRequest()).getHeaders(name);
+        while (e.hasMoreElements()) {
+            // add the names of the request headers into the list
+            String n = e.nextElement();
+            set.add(n);
+        }
+        Optional.ofNullable(customHeaders.get(name)).ifPresent(h -> set.add(h));
+        return Collections.enumeration(set);
+    }
+    
     public Enumeration<String> getHeaderNames() {
         // create a set of the custom header names
         Set<String> set = new HashSet<String>(customHeaders.keySet());
