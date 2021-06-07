@@ -33,7 +33,6 @@ public class User {
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.privateProfile = "no";
     }
     
     public User(UserDTO user) {

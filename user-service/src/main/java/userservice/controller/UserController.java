@@ -76,9 +76,10 @@ public class UserController {
             UserDTO userDTO = new UserDTO(user.getUsername(), user.getPassword(), "ROLE_USER");            
             Object newUserObject = restTemplate.postForObject(REGISTER_USER, userDTO, Object.class);
         	
+			
+        	user.setPrivateProfile("no");
         	User k = userService.insert(user);
         	System.out.println("Pass: " + user.getPassword());
-  
             return new ResponseEntity<User>(k, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);

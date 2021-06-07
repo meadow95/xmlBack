@@ -146,6 +146,8 @@ public class PostController {
 
             	if(t.equalsIgnoreCase(tag)) {
             		
+            		//gadjaj user service da proveris da li je user koji je napravio post privatan ili javan
+            		//if javan .add, ako ne nemoj
             		postsReturn.add(k);
             	}
             }

@@ -1,0 +1,10 @@
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\dto\JwtParseResponseDto.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\service\JwtService.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\dto\JwtParseRequestDto.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\config\JwtUsernamePasswordAuthenticationFilter.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\AuthServiceApplication.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\dto\LoginDto.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\config\WebSecurityConfiguration.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\model\UserRole.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\controller\JwtController.java
+C:\Users\Jovana\Documents\Faks\ISA2021\xmlBack\auth-service\src\main\java\authservice\dto\ErrorDto.java
