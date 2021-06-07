@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.apache.http.Header;
+import java.util.Arrays;
+
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -29,10 +32,11 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
-		 try{
+		MutableHTTPServletRequest mutableRequest = new MutableHTTPServletRequest(request);
+		try {
 			// JWT Token is in the form "Bearer token". Remove Bearer word and
-			// get  only the Token
-			String jwtToken = extractJwtFromRequest(request);
+			// get only the Token
+			String jwtToken = extractJwtFromRequest(mutableRequest);
 
 			if (StringUtils.hasText(jwtToken) && jwtTokenUtil.validateToken(jwtToken)) {
 				UserDetails userDetails = new User(jwtTokenUtil.getUsernameFromToken(jwtToken), "",
@@ -43,18 +47,19 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 				// After setting the Authentication in the context, we specify
 				// that the current user is authenticated. So it passes the
 				// Spring Security Configurations successfully.
+				mutableRequest.putHeader("Authenticated", "true");
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				
+				System.out.println("Header is: " + mutableRequest.getHeader("Authenticated"));
+				
 			} else {
 				System.out.println("Cannot set the Security Context");
 			}
-		 }catch(ExpiredJwtException ex)
-		 {
-			 request.setAttribute("exception", ex);
-		 }
-		 catch(BadCredentialsException ex)
-		 {
-			 request.setAttribute("exception", ex);
-		 }
+		} catch (ExpiredJwtException ex) {
+			request.setAttribute("exception", ex);
+		} catch (BadCredentialsException ex) {
+			request.setAttribute("exception", ex);
+		}
 		chain.doFilter(request, response);
 	}
 
