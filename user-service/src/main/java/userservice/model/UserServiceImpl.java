@@ -78,6 +78,7 @@ public class UserServiceImpl implements /*UserDetailsService,*/UserService {
     }
 
     public User update(User user) {
+    	userRepository.delete(user);
         return userRepository.save(user);
     }
 
@@ -87,8 +88,19 @@ public class UserServiceImpl implements /*UserDetailsService,*/UserService {
         return korisnik;
     }
 
-	public User findOne(String id) {
-		// TODO Auto-generated method stub
+	public User findOne(String username) {
+		List<User> users = this.userRepository.findAll();
+		
+		
+		for(User p : users) {
+			
+			if(p.getUsername().equalsIgnoreCase(username)) {
+				
+				return p;
+			}			
+			
+		}
+		
 		return null;
 	}
 

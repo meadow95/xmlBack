@@ -62,6 +62,7 @@ public class UserController {
     )
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByEmail(user.getEmail()) == null) {
+        	user.setPrivateProfile("no");
             User k = userService.insert(user);
             return new ResponseEntity<User>(k, HttpStatus.CREATED);
         } else {
