@@ -1,4 +1,4 @@
-package apigateway;
+package api.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 @EnableEurekaClient
 @EnableZuulProxy
 @SpringBootApplication
-public class ApiGatewayApplication {
+public class SpringBootSecurityApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ApiGatewayApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootSecurityApplication.class, args);
+	}
 
 }
