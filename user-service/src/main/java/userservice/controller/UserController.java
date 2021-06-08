@@ -73,7 +73,7 @@ public class UserController {
         	
         	RestTemplate restTemplate = new RestTemplate();
             
-            UserDTO userDTO = new UserDTO(user.getUsername(), user.getPassword(), "ROLE_USER");            
+            UserDTO userDTO = new UserDTO(user.getUsername(), user.getPassword(), "ROLE_ADMIN");            
             Object newUserObject = restTemplate.postForObject(REGISTER_USER, userDTO, Object.class);
         	
 			
