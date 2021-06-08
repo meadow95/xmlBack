@@ -42,23 +42,23 @@ services:
         depends_on: 
             - discovery-server
 
-    auth-service:
-        image: auth-service
-        restart: on-failure
-        container_name: auth-service
-        build:
-            context: ./auth-service
-            dockerfile: Dockerfile
-        ports:
-            - 8081:8081
+#    auth-service:
+#        image: auth-service
+#        restart: on-failure
+#        container_name: auth-service
+#        build:
+#            context: ./auth-service
+#            dockerfile: Dockerfile
+#        ports:
+#            - 8081:8081
 #        networks:
 #            - xmlback-master_default
-        environment: 
-            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
-            
-        depends_on: 
-            - discovery-server
-            - mongoDB
+#        environment: 
+#            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+#            
+#        depends_on: 
+#            - discovery-server
+#            - mongoDB
 
 
     user-service:
