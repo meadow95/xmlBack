@@ -77,9 +77,15 @@ public class UserController {
             Object newUserObject = restTemplate.postForObject(REGISTER_USER, userDTO, Object.class);
         	
 			
-        	user.setPrivateProfile("no");
+        	if(user.getPrivateProfile().equalsIgnoreCase("no")) {
+        		user.setPrivateProfile("no");
+        	}else {
+        		user.setPrivateProfile("yes");
+        	}
         	User k = userService.insert(user);
         	System.out.println("Pass: " + user.getPassword());
+        	System.out.println("Nalog je:" + user.getPrivateProfile());
+        	
             return new ResponseEntity<User>(k, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
