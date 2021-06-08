@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 //@RequestMapping("")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
 	private static final String REGISTER_USER = "http://localhost:8080/register";
