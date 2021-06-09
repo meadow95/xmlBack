@@ -3,6 +3,7 @@ package postservice.controller;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import java.nio.file.Paths;
 import javax.servlet.ServletContext;
 
 import postservice.postmodel.PostService;
+import postservice.postmodel.UserDTO;
 //import userservice.model.User;
 import postservice.postmodel.Post;
 
@@ -59,6 +61,8 @@ public class PostController {
     public PostController(PostService smestajService){
         this.postService = smestajService;
     }
+    
+    private static final String GET_USER = "http://localhost:8080/user/userUsername/";
 
 
     @RequestMapping(
@@ -84,11 +88,22 @@ public class PostController {
         
         List<Post> postsReturn = new ArrayList<Post>();
         
+        RestTemplate restTemplate = new RestTemplate();
+        
+        UserDTO userDTO = new UserDTO();            
+            
         for(Post k : posts) {
 
         	if(k.getLocation().equalsIgnoreCase(location)) {
         		
-        		postsReturn.add(k);
+        		userDTO = restTemplate.getForObject(GET_USER + "/" + k.getUser() + "/", UserDTO.class);
+        		
+        		if(userDTO.getPrivateProfile().equalsIgnoreCase("no")) {
+        			
+        			postsReturn.add(k);
+        			
+        		}
+        		else {}
         		
         	}
         }
@@ -113,6 +128,7 @@ public class PostController {
 
         	if(k.getUser().equals(user)) {
         		
+        		
         		postsReturn.add(k);
         		
         	}
@@ -129,6 +145,63 @@ public class PostController {
     
     @RequestMapping(
             method = RequestMethod.GET,
+            value ="/getHome/{user}/",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<List<Post>> getHomeUser(@PathVariable("user") String user) {
+    	
+    	System.out.println("Usao sam u home");
+    	
+        List<Post> posts = postService.findAll();
+        
+        List<Post> postsReturn = new ArrayList<Post>();
+        
+        RestTemplate restTemplate = new RestTemplate();
+        
+        UserDTO userDTO = restTemplate.getForObject(GET_USER + "/" + user + "/", UserDTO.class);
+        
+        List<UserDTO> following = new ArrayList<UserDTO>();
+        
+        if(userDTO.getFollowing() != null) {
+        	
+        	following = userDTO.getFollowing();
+            
+            for(UserDTO u : following) {
+            	
+            	List<Post> postsUser = new ArrayList<Post>();
+
+                for(Post p : posts) {
+                	
+                	if(p.getUser().equalsIgnoreCase(u.getUsername())) {
+                		
+                		postsUser.add(p);
+                		
+                	}
+                	
+                }
+            	
+                if(postsUser.size() != 0 ) {
+                	
+                	int index = postsUser.size()-1;
+                	
+                	System.out.println("index je: " + index);
+                	
+                	postsReturn.add(postsUser.get(index));
+                	
+                }
+            	
+            }
+            
+            
+            return new ResponseEntity<List<Post>>(postsReturn, HttpStatus.OK);
+        }
+        
+        return new ResponseEntity<List<Post>>(postsReturn, HttpStatus.NOT_FOUND);
+        
+    }
+    
+    @RequestMapping(
+            method = RequestMethod.GET,
             value ="/getPostsTag/{tag}/",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -138,17 +211,26 @@ public class PostController {
         
         List<Post> postsReturn = new ArrayList<Post>();
         
+        RestTemplate restTemplate = new RestTemplate();
+        
+        UserDTO userDTO = new UserDTO();
+        
+        
         for(Post k : posts) {
         	
         	List<String> tags = k.getTags();
+        	
+        	userDTO = restTemplate.getForObject(GET_USER + "/" + k.getUser() + "/", UserDTO.class);
         	
             for(String t : tags) {
 
             	if(t.equalsIgnoreCase(tag)) {
             		
-            		//gadjaj user service da proveris da li je user koji je napravio post privatan ili javan
-            		//if javan .add, ako ne nemoj
+            		if(userDTO.getPrivateProfile().equalsIgnoreCase("no")) {
+            		
             		postsReturn.add(k);
+            		}
+            		else {}
             	}
             }
         }

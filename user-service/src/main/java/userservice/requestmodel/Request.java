@@ -9,7 +9,8 @@ public class Request {
     private String id;
     private String sender;
     private String receiver;
-    private int approved;
+    private String identificationNum;
+	private int approved;
 
 	public Request(String sender, String receiver) {
         this.sender = sender;
@@ -19,6 +20,14 @@ public class Request {
     public Request() {
 
     }
+    
+    public String getIdentificationNum() {
+		return identificationNum;
+	}
+
+	public void setIdentificationNum(String identificationNum) {
+		this.identificationNum = identificationNum;
+	}
     
     public int getApproved() {
 		return approved;
